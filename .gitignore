@@ -8,7 +8,7 @@
 /bazel-out
 
 # Dependencies
-/node_modules
+/UI/node_modules
 
 # Cordova
 /www
