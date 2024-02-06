@@ -4,48 +4,67 @@
           <mat-card-title>Create Account</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-          <mat-grid-list cols="2" rowHeight="100px" gutterSize="15px">
+          <mat-grid-list cols="2" rowHeight="100px" gutterSize="15px" [formGroup]="registerForm">
             <mat-grid-tile>
               <mat-form-field color="accent">
                 <mat-label>First Name</mat-label>
-                <input matInput>
+                <input matInput formControlName="firstName">
+                <mat-error>First Name is required</mat-error>
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
               <mat-form-field color="accent">
                 <mat-label>Last Name</mat-label>
-                <input matInput>
+                <input matInput formControlName="lastName">
+                <mat-error>Last Name is required</mat-error>
                 </mat-form-field>
               </mat-grid-tile>
             <mat-grid-tile colspan="2">
               <mat-form-field color="accent">
                 <mat-label>Email</mat-label>
-                <input matInput>
+                <input matInput formControlName="email">
+                <mat-error>Email is required</mat-error>
                 </mat-form-field>
               </mat-grid-tile>
             <mat-grid-tile colspan="2">
               <mat-form-field color="accent">
                 <mat-label>Mobile Number</mat-label>
-                <input matInput>
+                <input matInput formControlName="mobileNumber">
+                <mat-error>Mobile Number is required</mat-error>
                 </mat-form-field>
               </mat-grid-tile>
             <mat-grid-tile>
               <mat-form-field color="accent">
                 <mat-label>Password</mat-label>
-                <input matInput>
+                <input [type]="hidePswdContent ? 'password' : 'text'"
+                    matInput formControlName="password">
+                <button mat-icon-button matSuffix (click)="hidePswdContent = !hidePswdContent">
+                  <mat-icon>
+                    {{ hidePswdContent ? "visibility_off" : "visibility_on" }}
+                  </mat-icon>
+                </button>
+                <mat-error>Password is required</mat-error>
                 </mat-form-field>
               </mat-grid-tile>
             <mat-grid-tile>
               <mat-form-field color="accent">
                 <mat-label>Confirm Password</mat-label>
-                <input matInput>
+                <input [type]="hideCPswdContent ? 'password' : 'text'"
+                matInput formControlName="cpassword">
+            <button mat-icon-button matSuffix (click)="hideCPswdContent = !hideCPswdContent">
+              <mat-icon>
+                {{ hideCPswdContent ? "visibility_off" : "visibility_on" }}
+              </mat-icon>
+            </button>
+            <mat-error>Please Confirm your Password</mat-error>
                 </mat-form-field>
               </mat-grid-tile>
           </mat-grid-list>
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-raised-button color="accent">Register</button>
+        <button mat-raised-button color="accent"
+          [disabled]="registerForm.invalid" (click)="register()">Register</button>
       </mat-card-actions>
       <mat-card-actions>
         <h4>Already have an account?</h4>
