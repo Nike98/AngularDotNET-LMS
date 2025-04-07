@@ -8,12 +8,16 @@ namespace API.Controllers
     [ApiController]
     public class LibraryController : ControllerBase
     {
-        public LibraryController(Context context)
+        public LibraryController(Context context, EmailService emailService, JwtService jwtService)
         {
             Context = context;
+            EmailService = emailService;
+            JwtService = jwtService;
         }
 
         public Context Context { get; }
+        public EmailService EmailService { get; }
+        public JwtService JwtService { get; }
 
         [HttpPost]
         public ActionResult Register(User user)
