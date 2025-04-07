@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../../shared/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'register',
@@ -11,7 +13,7 @@ export class RegisterComponent {
   hideCPswdContent: boolean = true;
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private apiService: ApiService, private snackBar: MatSnackBar) {
     this.registerForm = fb.group({
       firstName: fb.control('', [Validators.required]),
       lastName: fb.control('', [Validators.required]),
@@ -30,5 +32,10 @@ export class RegisterComponent {
       mobileNumber: this.registerForm.get('mobileNumber')?.value,
       password: this.registerForm.get('password')?.value,
     };
+    this.apiService.register(user).subscribe({
+      next: (res) => {
+        this.snackBar.open(res, 'OK');
+      }
+    })
   }
 }
