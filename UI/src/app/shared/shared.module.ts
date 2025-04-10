@@ -16,7 +16,13 @@ import { HttpClientModule } from '@angular/common/http';
     PageSideNavComponent,
     PageNotFoundComponent,
   ],
-  imports: [CommonModule, HttpClientModule, MaterialModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    MaterialModule,
+    RouterModule,
+    ReactiveFormsModule,
+  ],
   exports: [
     CommonModule,
     MaterialModule,

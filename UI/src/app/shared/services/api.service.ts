@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '../../models/models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-
   baseUrl: string = 'https://localhost:7293/api/Library/';
-  constructor(private http: HttpClient) { }
+  userStatus: Subject<string> = new Subject();
+
+  constructor(private http: HttpClient, private jwt: JwtHelperService) {}
 
   register(user: any) {
     return this.http.post(this.baseUrl + 'Register', user, {
@@ -15,7 +19,7 @@ export class ApiService {
     });
   }
 
-  login(info:any) {
+  login(info: any) {
     let params = new HttpParams()
       .append('email', info.email)
       .append('password', info.password);
@@ -24,5 +28,19 @@ export class ApiService {
       params: params,
       responseType: 'text',
     });
+  }
+
+  isloggedIn(): boolean {
+    if (
+      localStorage.getItem('access_token') != null &&
+      !this.jwt.isTokenExpired()
+    )
+      return true;
+    return false;
+  }
+
+  getUserInfo(): User | null {
+    if (!this.isloggedIn()) return null;
+    var decodedToken = this.jwt.decodeToken();
   }
 }
