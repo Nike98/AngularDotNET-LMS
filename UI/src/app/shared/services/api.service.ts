@@ -42,5 +42,22 @@ export class ApiService {
   getUserInfo(): User | null {
     if (!this.isloggedIn()) return null;
     var decodedToken = this.jwt.decodeToken();
+    var user: User = {
+      id: decodedToken.id,
+      firstName: decodedToken.firstName,
+      lastName: decodedToken.lastName,
+      email: decodedToken.email,
+      mobileNumber: decodedToken.mobileNumber,
+      userType: UserType[decodedToken.userType as keyof typeof UserType],
+      accountStatus: decodedToken.accountStatus,
+      createdOn: decodedToken.createdOn,
+      password: '',
+    };
+    return user;
+  }
+
+  logout() {
+    localStorage.removeItem('access_token');
+    this.userStatus.next('loggedOff');
   }
 }
