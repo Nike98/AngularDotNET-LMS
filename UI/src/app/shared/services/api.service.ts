@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from '../../models/models';
+import { User, UserType } from '../../models/models';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class ApiService {
     });
   }
 
-  isloggedIn(): boolean {
+  isLoggedIn(): boolean {
     if (
       localStorage.getItem('access_token') != null &&
       !this.jwt.isTokenExpired()
@@ -40,7 +40,7 @@ export class ApiService {
   }
 
   getUserInfo(): User | null {
-    if (!this.isloggedIn()) return null;
+    if (!this.isLoggedIn()) return null;
     var decodedToken = this.jwt.decodeToken();
     var user: User = {
       id: decodedToken.id,
